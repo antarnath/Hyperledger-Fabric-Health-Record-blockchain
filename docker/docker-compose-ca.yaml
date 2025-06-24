@@ -1,0 +1,108 @@
+version: '3.7'
+
+services:
+
+  ca-orderer:
+    image: hyperledger/fabric-ca:latest
+    container_name: ca.ordererOrg.example.com
+    ports:
+      - "7154:7154"
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-orderer
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_GENERATE=true
+      - FABRIC_CA_SERVER_PORT=7154
+    volumes:
+      - ../organizations/fabric-ca/ordererOrg:/etc/hyperledger/fabric-ca-server
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    networks:
+      - ehr-net
+
+  ca-hospital:
+    image: hyperledger/fabric-ca:latest
+    container_name: ca.hospitalOrg.example.com
+    ports:
+      - "7054:7054"
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-hospital
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_GENERATE=true
+      - FABRIC_CA_SERVER_PORT=7054
+    volumes:
+      - ../organizations/fabric-ca/hospitalOrg:/etc/hyperledger/fabric-ca-server
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    networks:
+      - ehr-net
+
+  ca-doctor:
+    image: hyperledger/fabric-ca:latest
+    container_name: ca.doctorOrg.example.com
+    ports:
+      - "7055:7055"
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-doctor
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_GENERATE=true
+      - FABRIC_CA_SERVER_PORT=7055
+    volumes:
+      - ../organizations/fabric-ca/doctorOrg:/etc/hyperledger/fabric-ca-server
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    networks:
+      - ehr-net
+
+  ca-lab:
+    image: hyperledger/fabric-ca:latest
+    container_name: ca.labOrg.example.com
+    ports:
+      - "7056:7056"
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-lab
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_GENERATE=true
+      - FABRIC_CA_SERVER_PORT=7056
+    volumes:
+      - ../organizations/fabric-ca/labOrg:/etc/hyperledger/fabric-ca-server
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    networks:
+      - ehr-net
+
+  ca-pharma:
+    image: hyperledger/fabric-ca:latest
+    container_name: ca.pharmaOrg.example.com
+    ports:
+      - "7057:7057"
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-pharma
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_GENERATE=true
+      - FABRIC_CA_SERVER_PORT=7057
+    volumes:
+      - ../organizations/fabric-ca/pharmaOrg:/etc/hyperledger/fabric-ca-server
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    networks:
+      - ehr-net
+
+  ca-patient:
+    image: hyperledger/fabric-ca:latest
+    container_name: ca.patientOrg.example.com
+    ports:
+      - "7058:7058"
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-patient
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_GENERATE=true
+      - FABRIC_CA_SERVER_PORT=7058
+    volumes:
+      - ../organizations/fabric-ca/patientOrg:/etc/hyperledger/fabric-ca-server
+    command: sh -c 'fabric-ca-server start -b admin:adminpw -d'
+    networks:
+      - ehr-net
+
+networks:
+  ehr-net:

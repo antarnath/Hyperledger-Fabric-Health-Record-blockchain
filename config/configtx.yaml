@@ -1,0 +1,227 @@
+Organizations:
+
+  - &OrdererOrg
+    Name: OrdererOrg
+    ID: OrdererMSP
+    MSPDir: ../organizations/ordererOrganizations/example.com/msp
+    Policies:
+      Readers: 
+        Type: Signature
+        Rule: "OR('OrdererMSP.member')"
+      Writers:
+        Type: Signature
+        Rule: "OR('OrdererMSP.member')"
+      Admins:
+        Type: Signature
+        Rule: "OR('OrdererMSP.admin')"
+    OrdererEndpoints:
+      - orderer.example.com:7050
+
+
+  - &HospitalOrg
+    Name: HospitalOrgMSP
+    ID: HospitalOrgMSP
+    MSPDir: ../organizations/peerOrganizations/hospitalOrg.example.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('HospitalOrgMSP.admin', 'HospitalOrgMSP.peer', 'HospitalOrgMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('HospitalOrgMSP.admin', 'HospitalOrgMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('HospitalOrgMSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('HospitalOrgMSP.peer')"
+    AnchorPeers:
+      - Host: peer0.hospitalOrg.example.com
+        Port: 7051
+
+  - &DoctorOrg
+    Name: DoctorOrgMSP
+    ID: DoctorOrgMSP
+    MSPDir: ../organizations/peerOrganizations/doctorOrg.example.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('DoctorOrgMSP.admin', 'DoctorOrgMSP.peer', 'DoctorOrgMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('DoctorOrgMSP.admin', 'DoctorOrgMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('DoctorOrgMSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('DoctorOrgMSP.peer')"
+    AnchorPeers:
+      - Host: peer0.doctorOrg.example.com
+        Port: 8051
+
+  - &LabOrg
+    Name: LabOrgMSP
+    ID: LabOrgMSP
+    MSPDir: ../organizations/peerOrganizations/labOrg.example.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('LabOrgMSP.admin', 'LabOrgMSP.peer', 'LabOrgMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('LabOrgMSP.admin', 'LabOrgMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('LabOrgMSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('LabOrgMSP.peer')"
+    AnchorPeers:
+      - Host: peer0.labOrg.example.com
+        Port: 9051
+
+  - &PharmaOrg
+    Name: PharmaOrgMSP
+    ID: PharmaOrgMSP
+    MSPDir: ../organizations/peerOrganizations/pharmaOrg.example.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('PharmaOrgMSP.admin', 'PharmaOrgMSP.peer', 'PharmaOrgMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('PharmaOrgMSP.admin', 'PharmaOrgMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('PharmaOrgMSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('PharmaOrgMSP.peer')"
+    AnchorPeers:
+      - Host: peer0.pharmaOrg.example.com
+        Port: 10051
+
+  - &PatientOrg
+    Name: PatientOrgMSP
+    ID: PatientOrgMSP
+    MSPDir: ../organizations/peerOrganizations/patientOrg.example.com/msp
+    Policies:
+      Readers:
+        Type: Signature
+        Rule: "OR('PatientOrgMSP.admin', 'PatientOrgMSP.peer', 'PatientOrgMSP.client')"
+      Writers:
+        Type: Signature
+        Rule: "OR('PatientOrgMSP.admin', 'PatientOrgMSP.client')"
+      Admins:
+        Type: Signature
+        Rule: "OR('PatientOrgMSP.admin')"
+      Endorsement:
+        Type: Signature
+        Rule: "OR('PatientOrgMSP.peer')"
+    AnchorPeers:
+      - Host: peer0.patientOrg.example.com
+        Port: 11051
+
+Capabilities:
+  Channel: &ChannelCapabilities
+    V2_0: true
+  Orderer: &OrdererCapabilities
+    V2_0: true
+  Application: &ApplicationCapabilities
+    V2_5: true
+
+Application: &ApplicationDefaults
+  Organizations:
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+    LifecycleEndorsement:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Endorsement"
+    Endorsement:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Endorsement"
+  Capabilities:
+    <<: *ApplicationCapabilities
+
+Orderer: &OrdererDefaults
+  OrdererType: etcdraft 
+  EtcdRaft:
+    Consenters:
+      - Host: orderer.example.com
+        Port: 7050
+        ClientTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt
+        ServerTLSCert: ../organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/server.crt      
+  Addresses:
+    - orderer.example.com:7050
+  BatchTimeout: 2s
+  BatchSize:
+    MaxMessageCount: 10
+    AbsoluteMaxBytes: 99 MB
+    PreferredMaxBytes: 512 KB
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+    BlockValidation:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+  Capabilities:
+    <<: *OrdererCapabilities
+
+Channel: &ChannelDefaults
+  Policies:
+    Readers:
+      Type: ImplicitMeta
+      Rule: "ANY Readers"
+    Writers:
+      Type: ImplicitMeta
+      Rule: "ANY Writers"
+    Admins:
+      Type: ImplicitMeta
+      Rule: "MAJORITY Admins"
+  Capabilities:
+    <<: *ChannelCapabilities
+
+Profiles:
+
+  EHRSystemGenesis:
+    <<: *ChannelDefaults
+    Orderer:
+      <<: *OrdererDefaults
+      Organizations:
+        - *OrdererOrg
+    Consortiums:
+      EHRConsortium:
+        Organizations:
+          - *HospitalOrg
+          - *DoctorOrg
+          - *LabOrg
+          - *PharmaOrg
+          - *PatientOrg
+
+  EHRChannel:
+    <<: *ChannelDefaults
+    Consortium: EHRConsortium
+    Application:
+      <<: *ApplicationDefaults
+      Organizations:
+        - *HospitalOrg
+        - *DoctorOrg
+        - *LabOrg
+        - *PharmaOrg
+        - *PatientOrg
