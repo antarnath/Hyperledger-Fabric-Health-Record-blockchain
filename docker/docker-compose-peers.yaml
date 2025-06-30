@@ -74,7 +74,7 @@ services:
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.doctorOrg.example.com:8051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.doctorOrg.example.com:8051
-      - CORE_PEER_LOCALMSPID=doctorOrgMSP
+      - CORE_PEER_LOCALMSPID=DoctorOrgMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/peers/peer0.doctorOrg.example.com/msp
       - CORE_OPERATIONS_LISTENADDRESS=peer0.doctorOrg.example.com:9445
       - CORE_METRICS_PROVIDER=prometheus
@@ -114,7 +114,7 @@ services:
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.labOrg.example.com:9051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.labOrg.example.com:9051
-      - CORE_PEER_LOCALMSPID=labOrgMSP
+      - CORE_PEER_LOCALMSPID=LabOrgMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/peers/peer0.labOrg.example.com/msp
       - CORE_OPERATIONS_LISTENADDRESS=peer0.labOrg.example.com:9446
       - CORE_METRICS_PROVIDER=prometheus
@@ -154,7 +154,7 @@ services:
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:1052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.pharmaOrg.example.com:1051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.pharmaOrg.example.com:1051
-      - CORE_PEER_LOCALMSPID=pharmaOrgMSP
+      - CORE_PEER_LOCALMSPID=PharmaOrgMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/peers/peer0.pharmaOrg.example.com/msp
       - CORE_OPERATIONS_LISTENADDRESS=peer0.pharmaOrg.example.com:9447
       - CORE_METRICS_PROVIDER=prometheus
@@ -193,7 +193,7 @@ services:
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:11052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.patientOrg.example.com:11051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.patientOrg.example.com:11051
-      - CORE_PEER_LOCALMSPID=patientOrgMSP
+      - CORE_PEER_LOCALMSPID=PatientOrgMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/peers/peer0.patientOrg.example.com/msp
       - CORE_OPERATIONS_LISTENADDRESS=peer0.patientOrg.example.com:9448
       - CORE_METRICS_PROVIDER=prometheus

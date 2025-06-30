@@ -19,9 +19,9 @@ function infoln() {
 # Stop and remove all containers from your fabric compose files
 function cleanupContainers() {
   infoln "Stopping and removing containers from CA, orderer, and peers"
-  docker-compose -f docker/docker-compose-ca.yaml down
-  docker-compose -f docker/docker-compose-orderer.yaml down
-  docker-compose -f docker/docker-compose-peers.yaml down
+  docker-compose -f docker/docker-compose-ca.yaml down -v
+  docker-compose -f docker/docker-compose-orderer.yaml down -v
+  docker-compose -f docker/docker-compose-peers.yaml down -v
 }
 
 function cleanupOrg() {
