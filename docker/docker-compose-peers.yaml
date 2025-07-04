@@ -21,6 +21,7 @@ services:
       - FABRIC_CFG_PATH=/etc/hyperledger/fabric
       - FABRIC_LOGGING_SPEC=INFO
       #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=ehr-net
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_PROFILE_ENABLED=false
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/peers/peer0.hospitalOrg.example.com/tls/server.crt
@@ -38,9 +39,10 @@ services:
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/peers/peer0.hospitalOrg.example.com/msp
       - CORE_OPERATIONS_LISTENADDRESS=peer0.hospitalOrg.example.com:9444
       - CORE_METRICS_PROVIDER=prometheus
-      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0hospitalOrg"}
+      # - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0hospitalOrg"}
       - CORE_CHAINCODE_EXECUTETIMEOUT=300s
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - ../organizations/peerOrganizations/hospitalOrg.example.com:/etc/hyperledger/fabric
       - peer0.hospitalOrg.example.com:/var/hyperledger/production
       - ../config/core.yaml:/etc/hyperledger/fabric/core.yaml
@@ -61,6 +63,7 @@ services:
       - FABRIC_CFG_PATH=/etc/hyperledger/fabric
       - FABRIC_LOGGING_SPEC=INFO
       #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=ehr-net
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_PROFILE_ENABLED=false
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/peers/peer0.doctorOrg.example.com/tls/server.crt
@@ -78,9 +81,10 @@ services:
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/peers/peer0.doctorOrg.example.com/msp
       - CORE_OPERATIONS_LISTENADDRESS=peer0.doctorOrg.example.com:9445
       - CORE_METRICS_PROVIDER=prometheus
-      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0doctorOrg"}
+      # - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0doctorOrg"}
       - CORE_CHAINCODE_EXECUTETIMEOUT=300s
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - ../organizations/peerOrganizations/doctorOrg.example.com:/etc/hyperledger/fabric
       - peer0.doctorOrg.example.com:/var/hyperledger/production
       - ../config/core.yaml:/etc/hyperledger/fabric/core.yaml
@@ -101,6 +105,7 @@ services:
       - FABRIC_CFG_PATH=/etc/hyperledger/fabric
       - FABRIC_LOGGING_SPEC=INFO
       #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=ehr-net
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_PROFILE_ENABLED=false
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/peers/peer0.labOrg.example.com/tls/server.crt
@@ -118,9 +123,10 @@ services:
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/peers/peer0.labOrg.example.com/msp
       - CORE_OPERATIONS_LISTENADDRESS=peer0.labOrg.example.com:9446
       - CORE_METRICS_PROVIDER=prometheus
-      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0labOrg"}
+      # - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0labOrg"}
       - CORE_CHAINCODE_EXECUTETIMEOUT=300s
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - ../organizations/peerOrganizations/labOrg.example.com:/etc/hyperledger/fabric
       - peer0.labOrg.example.com:/var/hyperledger/production
       - ../config/core.yaml:/etc/hyperledger/fabric/core.yaml
@@ -141,6 +147,7 @@ services:
       - FABRIC_CFG_PATH=/etc/hyperledger/fabric
       - FABRIC_LOGGING_SPEC=INFO
       #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=ehr-net
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_PROFILE_ENABLED=false
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/peers/peer0.pharmaOrg.example.com/tls/server.crt
@@ -158,9 +165,10 @@ services:
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/peers/peer0.pharmaOrg.example.com/msp
       - CORE_OPERATIONS_LISTENADDRESS=peer0.pharmaOrg.example.com:9447
       - CORE_METRICS_PROVIDER=prometheus
-      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0pharmaOrg"}
+      # - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0pharmaOrg"}
       - CORE_CHAINCODE_EXECUTETIMEOUT=300s
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - ../organizations/peerOrganizations/pharmaOrg.example.com:/etc/hyperledger/fabric
       - peer0.pharmaOrg.example.com:/var/hyperledger/production
       - ../config/core.yaml:/etc/hyperledger/fabric/core.yaml
@@ -180,6 +188,7 @@ services:
       - FABRIC_CFG_PATH=/etc/hyperledger/fabric
       - FABRIC_LOGGING_SPEC=INFO
       #- FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=ehr-net
       - CORE_PEER_TLS_ENABLED=true
       - CORE_PEER_PROFILE_ENABLED=false
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/peers/peer0.patientOrg.example.com/tls/server.crt
@@ -197,9 +206,10 @@ services:
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/peers/peer0.patientOrg.example.com/msp
       - CORE_OPERATIONS_LISTENADDRESS=peer0.patientOrg.example.com:9448
       - CORE_METRICS_PROVIDER=prometheus
-      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0patientOrg"}
+      # - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0patientOrg"}
       - CORE_CHAINCODE_EXECUTETIMEOUT=300s
     volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
       - ../organizations/peerOrganizations/patientOrg.example.com:/etc/hyperledger/fabric
       - peer0.patientOrg.example.com:/var/hyperledger/production
       - ../config/core.yaml:/etc/hyperledger/fabric/core.yaml
