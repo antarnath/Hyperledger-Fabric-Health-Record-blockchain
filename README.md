@@ -109,3 +109,64 @@ Each organization runs its own peer and has its identities managed by Fabric CA.
       chmod +x scripts/joinChannel.sh
       ./scripts/joinChannel.sh
    ```
+8. **Join all peers to the channel:**
+   ##### run a scripts that complete this setp
+   ```bash
+      chmod +x scripts/joinChannel.sh
+      ./scripts/joinChannel.sh
+   ```
+   ##### or manually complete:
+   ##### This is for peer0.hospitalOrg.example.com
+   ```bash
+      docker cp config/artifacts/ehrchannel.block peer0.hospitalOrg.example.com:/etc/hyperledger/fabric/ehrchannel.block
+
+      docker exec -it peer0.hospitalOrg.example.com bash
+         export CORE_PEER_TLS_ENABLED=true
+         export CORE_PEER_LOCALMSPID=HospitalOrgMSP
+         export CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/users/Admin@hospitalOrg.example.com/msp
+         export CORE_PEER_ADDRESS=peer0.hospitalOrg.example.com:7051
+         export CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/peers/peer0.hospitalOrg.example.com/tls/ca.crt
+         peer channel join -b /etc/hyperledger/fabric/ehrchannel.block
+         peer channel list
+   ```
+   ##### .....Repeat this for all peer
+   
+9. **Package Chaincode**
+    ##### First go to chaincode/ehr-chaincode
+   ```bash
+      cd chaincode/ehr-chaincode
+   ```
+   ##### run this:
+   ```bash
+      go mod init ehr
+      go mod tidy
+      GO111MODULE=on go mod vendor
+   ```
+   ##### Navigate root directory
+   ```bash
+      cd ../../
+   ```
+   ```bash
+      export FABRIC_CFG_PATH=$PWD/config/
+      peer lifecycle chaincode package ehr.tar.gz   --path ./chaincode/ehr-chaincode   --lang golang   --label ehr_1.0
+   ```
+
+10. **Install Chaincode for all peer**
+      ##### run a scripts that complete this setp
+      ```bash
+         chmod +x scripts/joinChannel.sh
+         ./scripts/joinChannel.sh
+      ```
+      ##### or manually complete:
+      ```bash
+         export CORE_PEER_TLS_ENABLED=true
+   		export CORE_PEER_LOCALMSPID=HospitalOrgMSP
+   		export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/hospitalOrg.example.com/users/Admin@hospitalOrg.example.com/msp
+   		export CORE_PEER_ADDRESS=localhost:7051
+   		export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/hospitalOrg.example.com/peers/peer0.hospitalOrg.example.com/tls/ca.crt
+   		peer lifecycle chaincode install ehr.tar.gz
+      ```
+      ##### .....Repeat this for all peer
+
+11. 
+   
