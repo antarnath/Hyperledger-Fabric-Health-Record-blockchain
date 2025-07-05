@@ -50,12 +50,18 @@ Each organization runs its own peer and has its identities managed by Fabric CA.
    ```bash
    docker-compose -f docker/docker-compose-ca.yaml up -d
    ```
-3. ** Executable registerEnroll.sh and run it:**
+3. **Executable registerEnroll.sh and run it:**
    ```bash
    chmod +x scripts/registerEnroll.sh
    ./scripts/registerEnroll.sh
    ```
 4. **Generate genesis block, channel transcation and anchor peer update transactions:**
+   ##### run a scripts that complete this
+   ```bash
+      chmod +x scripts/createArtifacts.sh
+      ./scripts/createArtifacts.sh
+   ```
+   ##### or manually run this
    ```bash
       configtxgen -profile EHRSystemGenesis -channelID system-channel -outputBlock config/artifacts/genesis.block
    
@@ -67,11 +73,7 @@ Each organization runs its own peer and has its identities managed by Fabric CA.
       configtxgen -profile EHRChannel   -outputAnchorPeersUpdate ./config/artifacts/PharmaOrgMSPanchors.tx   -channelID ehrchannel   -asOrg PharmaOrgMSP
       configtxgen -profile EHRChannel   -outputAnchorPeersUpdate ./config/artifacts/PatientOrgMSPanchors.tx   -channelID ehrchannel   -asOrg PatientOrgMSP
    ```
-   or just run a scripts that complete this
-   ```bash
-      chmod +x scripts/createArtifacts.sh
-      ./scripts/createArtifacts.sh
-   ```
+   
 5. **Start all peer organizations:**
    ```bash
       docker-compose -f docker/docker-compose-orderer.yaml up -d
@@ -89,33 +91,13 @@ Each organization runs its own peer and has its identities managed by Fabric CA.
       peer channel create   -o localhost:7050   --ordererTLSHostnameOverride orderer.example.com   -c ehrchannel   --tls   --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt   -f ${PWD}/config/artifacts/channel.tx   --outputBlock ${PWD}/config/artifacts/ehrchannel.block
    ```
 
-7. ** Join all peers to the channel:**
-   ##### This is for peer0.hospitalOrg.example.com
-   ```bash
-      docker cp config/artifacts/ehrchannel.block peer0.hospitalOrg.example.com:/etc/hyperledger/fabric/ehrchannel.block
-
-      docker exec -it peer0.hospitalOrg.example.com bash
-         export CORE_PEER_TLS_ENABLED=true
-         export CORE_PEER_LOCALMSPID=HospitalOrgMSP
-         export CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/users/Admin@hospitalOrg.example.com/msp
-         export CORE_PEER_ADDRESS=peer0.hospitalOrg.example.com:7051
-         export CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/peers/peer0.hospitalOrg.example.com/tls/ca.crt
-         peer channel join -b /etc/hyperledger/fabric/ehrchannel.block
-         peer channel list
-   ```
-   ##### Repeat this for all peer
-   ##### or run this 
+7. **Join all peers to the channel:**
+   ##### run a scripts that complete this
    ```bash
       chmod +x scripts/joinChannel.sh
       ./scripts/joinChannel.sh
    ```
-8. **Join all peers to the channel:**
-   ##### run a scripts that complete this setp
-   ```bash
-      chmod +x scripts/joinChannel.sh
-      ./scripts/joinChannel.sh
-   ```
-   ##### or manually complete:
+   ##### or manually run this
    ##### This is for peer0.hospitalOrg.example.com
    ```bash
       docker cp config/artifacts/ehrchannel.block peer0.hospitalOrg.example.com:/etc/hyperledger/fabric/ehrchannel.block
@@ -131,7 +113,7 @@ Each organization runs its own peer and has its identities managed by Fabric CA.
    ```
    ##### .....Repeat this for all peer
    
-9. **Package Chaincode**
+8. **Package Chaincode**
     ##### First go to chaincode/ehr-chaincode
    ```bash
       cd chaincode/ehr-chaincode
@@ -151,7 +133,7 @@ Each organization runs its own peer and has its identities managed by Fabric CA.
       peer lifecycle chaincode package ehr.tar.gz   --path ./chaincode/ehr-chaincode   --lang golang   --label ehr_1.0
    ```
 
-10. **Install Chaincode for all peer**
+9. **Install Chaincode for all peer**
       ##### run a scripts that complete this setp
       ```bash
          chmod +x scripts/joinChannel.sh
@@ -168,5 +150,5 @@ Each organization runs its own peer and has its identities managed by Fabric CA.
       ```
       ##### .....Repeat this for all peer
 
-11. 
+10. 
    
