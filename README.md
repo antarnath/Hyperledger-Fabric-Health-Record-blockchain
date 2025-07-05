@@ -88,3 +88,24 @@ Each organization runs its own peer and has its identities managed by Fabric CA.
 
       peer channel create   -o localhost:7050   --ordererTLSHostnameOverride orderer.example.com   -c ehrchannel   --tls   --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt   -f ${PWD}/config/artifacts/channel.tx   --outputBlock ${PWD}/config/artifacts/ehrchannel.block
    ```
+
+7. ** Join all peers to the channel:**
+   ##### This is for peer0.hospitalOrg.example.com
+   ```bash
+      docker cp config/artifacts/ehrchannel.block peer0.hospitalOrg.example.com:/etc/hyperledger/fabric/ehrchannel.block
+
+      docker exec -it peer0.hospitalOrg.example.com bash
+         export CORE_PEER_TLS_ENABLED=true
+         export CORE_PEER_LOCALMSPID=HospitalOrgMSP
+         export CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/users/Admin@hospitalOrg.example.com/msp
+         export CORE_PEER_ADDRESS=peer0.hospitalOrg.example.com:7051
+         export CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/peers/peer0.hospitalOrg.example.com/tls/ca.crt
+         peer channel join -b /etc/hyperledger/fabric/ehrchannel.block
+         peer channel list
+   ```
+   ##### Repeat this for all peer
+   ##### or run this 
+   ```bash
+      chmod +x scripts/joinChannel.sh
+      ./scripts/joinChannel.sh
+   ```
