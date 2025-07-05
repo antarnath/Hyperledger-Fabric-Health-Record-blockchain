@@ -72,3 +72,19 @@ Each organization runs its own peer and has its identities managed by Fabric CA.
       chmod +x scripts/createArtifacts.sh
       ./scripts/createArtifacts.sh
    ```
+5. **Start all peer organizations:**
+   ```bash
+      docker-compose -f docker/docker-compose-orderer.yaml up -d
+      docker-compose -f docker/docker-compose-peers.yaml up -d
+   ```
+6. **Create channel using channel transaction:**
+   ```bash
+      export FABRIC_CFG_PATH=${PWD}/config
+      export CORE_PEER_TLS_ENABLED=true
+      export CORE_PEER_LOCALMSPID=HospitalOrgMSP
+      export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/hospitalOrg.example.com/peers/peer0.hospitalOrg.example.com/tls/ca.crt
+      export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/hospitalOrg.example.com/users/Admin@hospitalOrg.example.com/msp
+      export CORE_PEER_ADDRESS=localhost:7051
+
+      peer channel create   -o localhost:7050   --ordererTLSHostnameOverride orderer.example.com   -c ehrchannel   --tls   --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt   -f ${PWD}/config/artifacts/channel.tx   --outputBlock ${PWD}/config/artifacts/ehrchannel.block
+   ```
