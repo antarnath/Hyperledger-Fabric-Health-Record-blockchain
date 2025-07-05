@@ -9,7 +9,7 @@ function infoln() {
 CHANNEL_NAME="ehrchannel"
 CHAINCODE_NAME="ehr"  
 CHAINCODE_VERSION="1.0"
-CHAINCODE_PACKAGE_ID="ehr_1.0:0323213207fdab754b30b41acf003fbc1cfd65afa7023ec2f75043e99ccfd0c3"
+CHAINCODE_PACKAGE_ID="ehr_1.0:7052ed6062379d01b494f5a0a8a8faf325f5f878943da2c0140846f09ed87a04"
 CHAINCODE_SEQUENCE=1
 
 ORDERER_CA="${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt"
