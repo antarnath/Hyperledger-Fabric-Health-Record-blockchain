@@ -45,3 +45,30 @@ Each organization runs its own peer and has its identities managed by Fabric CA.
    ```bash
    git clone https://github.com/antarnath/Hyperledger-Fabric-Health-Record-blockchain.git
    cd Hyperledger-Fabric-Health-Record-blockchain
+   ```
+2. **Start CA containers:**
+   ```bash
+   docker-compose -f docker/docker-compose-ca.yaml up -d
+   ```
+3. ** Executable registerEnroll.sh and run it:**
+   ```bash
+   chmod +x scripts/registerEnroll.sh
+   ./scripts/registerEnroll.sh
+   ```
+4. **Generate genesis block, channel transcation and anchor peer update transactions:**
+   ```bash
+      configtxgen -profile EHRSystemGenesis -channelID system-channel -outputBlock config/artifacts/genesis.block
+   
+      configtxgen -profile EHRChannel -outputCreateChannelTx ./config/artifacts/channel.tx -channelID ehrchannel
+
+      configtxgen -profile EHRChannel   -outputAnchorPeersUpdate ./config/artifacts/HospitalOrgMSPanchors.tx   -channelID ehrchannel   -asOrg HospitalOrgMSP  
+      configtxgen -profile EHRChannel   -outputAnchorPeersUpdate ./config/artifacts/DoctorOrgMSPanchors.tx   -channelID ehrchannel   -asOrg DoctorOrgMSP
+      configtxgen -profile EHRChannel   -outputAnchorPeersUpdate ./config/artifacts/LabOrgMSPanchors.tx  -channelID ehrchannel   -asOrg LabOrgMSP
+      configtxgen -profile EHRChannel   -outputAnchorPeersUpdate ./config/artifacts/PharmaOrgMSPanchors.tx   -channelID ehrchannel   -asOrg PharmaOrgMSP
+      configtxgen -profile EHRChannel   -outputAnchorPeersUpdate ./config/artifacts/PatientOrgMSPanchors.tx   -channelID ehrchannel   -asOrg PatientOrgMSP
+   ```
+   or just run a scripts that complete this
+   ```bash
+      chmod +x scripts/createArtifacts.sh
+      ./scripts/createArtifacts.sh
+   ```
