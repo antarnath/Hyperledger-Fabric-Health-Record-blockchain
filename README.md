@@ -28,3 +28,20 @@ Each organization runs its own peer and has its identities managed by Fabric CA.
 - **REST API (Planned):** Backend API layer to interact with the blockchain network.
 
 ---
+
+## Getting Started
+
+### Prerequisites
+
+- Go (1.20 or higher recommended)
+- Docker & Docker Compose
+- Hyperledger Fabric binaries (`peer`, `orderer`, `configtxgen`, etc.)
+- Git (for version control)
+
+### Setup
+
+1. **Clone the repository:**
+
+   ```bash
+   git clone https://github.com/antarnath/Hyperledger-Fabric-Health-Record-blockchain.git
+   cd Hyperledger-Fabric-Health-Record-blockchain
