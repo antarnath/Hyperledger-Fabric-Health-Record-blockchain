@@ -214,3 +214,10 @@ Each organization runs its own peer and has its identities managed by Fabric CA.
         {"id":"doc2","name":"Dr. Bob","hospital":"hospital2","specialty":"Neurology"}
       ]
       ```
+
+ **Clean up all things**
+    ```bash
+    chmod +x scripts/cleanupIdentities.sh
+    ./scripts/cleanupIdentities.sh
+    ```
+   
