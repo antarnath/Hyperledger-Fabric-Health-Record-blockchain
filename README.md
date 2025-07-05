@@ -151,7 +151,7 @@ Each organization runs its own peer and has its identities managed by Fabric CA.
       ##### .....Repeat this for all peer
 
 10. **Approve the Chaincode Definition**
-    ##### run a scripts that complete this setp
+      ##### run a scripts that complete this setp
       ```bash
       chmod +x scripts/approveChaincode.sh
       ./scripts/approveChaincode.sh
@@ -176,3 +176,41 @@ Each organization runs its own peer and has its identities managed by Fabric CA.
       peer lifecycle chaincode approveformyorg   --orderer localhost:7050   --ordererTLSHostnameOverride orderer.example.com   --channelID $CHANNEL_NAME   --name $CC_NAME   --version $CC_VERSION   --package-id $CC_PACKAGE_ID   --sequence $CC_SEQUENCE  --init-required  --tls   --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt
       ```
     ##### .....Repeat this for all peer
+11. **Commit the Chaincode Definition**
+    ##### run a scripts that complete this setp
+      ```bash
+      chmod +x scripts/commitChaincode.sh
+      ./scripts/commitChaincode.sh
+      ```
+      ##### or manually complete:
+    ```bash
+    export CORE_PEER_TLS_ENABLED=true
+    export CORE_PEER_LOCALMSPID=HospitalOrgMSP
+    export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/hospitalOrg.example.com/users/Admin@hospitalOrg.example.com/msp
+    export CORE_PEER_ADDRESS=localhost:7051
+    export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/hospitalOrg.example.com/peers/peer0.hospitalOrg.example.com/tls/ca.crt
+
+    peer lifecycle chaincode commit   -o localhost:7050   --ordererTLSHostnameOverride orderer.example.com   --channelID ehrchannel   --name ehr   --version 1.0   --sequence 1   --init-required   --tls   --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt   --peerAddresses localhost:7051   --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/hospitalOrg.example.com/peers/peer0.hospitalOrg.example.com/tls/ca.crt   --peerAddresses localhost:8051   --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/doctorOrg.example.com/peers/peer0.doctorOrg.example.com/tls/ca.crt   --peerAddresses localhost:9051   --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/labOrg.example.com/peers/peer0.labOrg.example.com/tls/ca.crt   --peerAddresses localhost:1051   --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/pharmaOrg.example.com/peers/peer0.pharmaOrg.example.com/tls/ca.crt   --peerAddresses localhost:11051   --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/patientOrg.example.com/peers/peer0.patientOrg.example.com/tls/ca.crt
+    ```
+
+12. **Chaincode Initialization**
+    ```bash
+    export CORE_PEER_LOCALMSPID=HospitalOrgMSP
+    export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/hospitalOrg.example.com/users/Admin@hospitalOrg.example.com/msp
+    export CORE_PEER_ADDRESS=localhost:7051
+    export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/hospitalOrg.example.com/peers/peer0.hospitalOrg.example.com/tls/ca.crt
+    export CORE_PEER_TLS_ENABLED=true
+
+    peer chaincode invoke   -o localhost:7050   --ordererTLSHostnameOverride orderer.example.com   --tls   --cafile ${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/tls/ca.crt   -C ehrchannel   -n ehr   --peerAddresses localhost:7051   --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/hospitalOrg.example.com/peers/peer0.hospitalOrg.example.com/tls/ca.crt   --peerAddresses localhost:8051   --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/doctorOrg.example.com/peers/peer0.doctorOrg.example.com/tls/ca.crt   --peerAddresses localhost:9051   --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/labOrg.example.com/peers/peer0.labOrg.example.com/tls/ca.crt   --peerAddresses localhost:1051   --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/pharmaOrg.example.com/peers/peer0.pharmaOrg.example.com/tls/ca.crt   --peerAddresses localhost:11051   --tlsRootCertFiles ${PWD}/organizations/peerOrganizations/patientOrg.example.com/peers/peer0.patientOrg.example.com/tls/ca.crt   -c '{"function":"InitLedger","Args":[]}'   --isInit
+    ```
+      ##### run this and check chaincode work perfectly 
+      ```bash
+      peer chaincode query -C ehrchannel -n ehr -c '{"Args":["GetAllDoctors"]}'
+      ```
+      ##### output like this:
+      ```bash
+      [
+        {"id":"doc1","name":"Dr. Alice","hospital":"hospital1","specialty":"Cardiology"},
+        {"id":"doc2","name":"Dr. Bob","hospital":"hospital2","specialty":"Neurology"}
+      ]
+      ```
