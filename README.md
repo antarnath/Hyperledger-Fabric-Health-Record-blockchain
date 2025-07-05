@@ -215,7 +215,7 @@ Each organization runs its own peer and has its identities managed by Fabric CA.
       ]
       ```
 
- **Clean up all things**
+13. **Clean up all things**
     ```bash
     chmod +x scripts/cleanupIdentities.sh
     ./scripts/cleanupIdentities.sh
